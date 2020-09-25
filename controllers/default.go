@@ -24,12 +24,12 @@ func (c *MainController) Get() {
 		return
 	}
 	//校验正确的情况
+   c.Ctx.ResponseWriter.Write([]byte("恭喜,数据校验成功。"))
 
 
-
-	c.Data["Website"] = "baidu.me"
-	c.Data["Email"] = "liulianwanfan@gmail.com"
-	c.TplName = "index.tpl"
+	//c.Data["Website"] = "baidu.me"
+	//c.Data["Email"] = "liulianwanfan@gmail.com"
+	//c.TplName = "index.tpl"
 }
 
 //func (c *MainController)Post(){
@@ -52,19 +52,21 @@ func (c *MainController) Get() {
 
 func (c *MainController)Post(){
     //1、解析前端提交的json格式的数据
-	var person models.Person
+	var user models.User
 	databytes,err:=ioutil.ReadAll(c.Ctx.Request.Body)
 	if err != nil {
 		c.Ctx.WriteString("数据解析错误")
 		return
 	}
-	err=json.Unmarshal(databytes,&person)
+	err=json.Unmarshal(databytes,&user)
 	if err != nil {
 		c.Ctx.WriteString("数据解析失败")
 		return
 	}
-	fmt.Println("姓名",person.Name)
-	fmt.Println("年龄",person.Age)
-	fmt.Println("性别",person.Sex)
+	fmt.Println("用户",user.User)
+	fmt.Println("缺口",user.Nick)
+	fmt.Println("密码",user.Password)
+	fmt.Println("生日",user.Birthday)
+	fmt.Println("地址",user.Address)
 	c.Ctx.WriteString("数据解析成功")
 }
